@@ -95,4 +95,6 @@
         <item></item> <!-- STREAM_DTMF -->
         <item></item> <!-- STREAM_TTS -->
     </string-array>
+
+    <string name="accessibility_data_connection_hspap">HSPA+</string>
 </resources>
