@@ -2253,5 +2253,7 @@ message MetricsEvent {
     // CAF
     CAF = 414;
 
+    // Location detail adapter
+    QS_LOCATION_DETAIL = 504;
   }
 }
