@@ -1,0 +1,373 @@
+From 9fa11720fad702571b8b7f03310b296091aaffcc Mon Sep 17 00:00:00 2001
+From: beanstown106 <nbenis106@gmail.com>
+Date: Sat, 10 Oct 2015 03:43:59 -0400
+Subject: [PATCH] Advanced Reboot + Fixs (Squashed) * SystemUI: Add global
+ reboot option -CAF * AdvancedReboot: Add advanced reboot options -CM *
+ AdvancedReboot: Enhance power menu reboot option -CM * ShutdownThread: Fix
+ longpress power for safemode -EuphoriaOS * ShutdownThread: Enable advanced
+ reboot by default -Beanstown106 * AdvancedReboot: Enable Via overlay instead
+ of Setting -Beanstown106 * AdvancedReboot: adapted to work on android
+ marshmallow -Beanstown106 * AdvancedReboot: Remove keyguard restrictions on
+ advanced reboot -Beanstown106 * AdvancedReboot: Remove and cleanup duplicate
+ strings -Beanstown106 99% of people who flash roms want advanced reboot their
+ was no need for it to be a setting
+
+Edited and squashed By:@BeansTown106
+
+aosip edit: remove doubles
+---
+ core/res/res/values/custom_arrays.xml              | 33 +++++++++
+ core/res/res/values/custom_config.xml              | 20 ++++++
+ core/res/res/values/custom_strings.xml             | 28 ++++++++
+ core/res/res/values/custom_symbols.xml             | 26 +++++++
+ .../com/android/server/policy/GlobalActions.java   | 37 +---------
+ .../com/android/server/power/ShutdownThread.java   | 81 +++++++++++++++++++---
+ 6 files changed, 178 insertions(+), 47 deletions(-)
+ create mode 100644 core/res/res/values/custom_arrays.xml
+ create mode 100644 core/res/res/values/custom_config.xml
+ create mode 100644 core/res/res/values/custom_strings.xml
+ create mode 100644 core/res/res/values/custom_symbols.xml
+
+diff --git a/core/res/res/values/custom_arrays.xml b/core/res/res/values/custom_arrays.xml
+new file mode 100644
+index 0000000..5d186b7
+--- /dev/null
++++ b/core/res/res/values/custom_arrays.xml
+@@ -0,0 +1,33 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++     Copyright (C) 2016 The Pure Nexus Project
++
++     Licensed under the Apache License, Version 2.0 (the "License");
++     you may not use this file except in compliance with the License.
++     You may obtain a copy of the License at
++
++          http://www.apache.org/licenses/LICENSE-2.0
++
++     Unless required by applicable law or agreed to in writing, software
++     distributed under the License is distributed on an "AS IS" BASIS,
++     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++     See the License for the specific language governing permissions and
++     limitations under the License.
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <!-- Defines the shutdown options shown in the reboot dialog. -->
++    <array name="shutdown_reboot_options" translatable="false">
++        <item>@string/reboot_reboot</item>
++        <item>@string/reboot_soft</item>
++        <item>@string/reboot_recovery</item>
++        <item>@string/reboot_bootloader</item>
++    </array>
++
++    <!-- Defines the shutdown actions passed to the kernel. -->
++    <string-array name="shutdown_reboot_actions" translatable="false">
++        <item></item>
++        <item>soft_reboot</item>
++        <item>recovery</item>
++        <item>bootloader</item>
++     </string-array>
++</resources>
+diff --git a/core/res/res/values/custom_config.xml b/core/res/res/values/custom_config.xml
+new file mode 100644
+index 0000000..5939e5c
+--- /dev/null
++++ b/core/res/res/values/custom_config.xml
+@@ -0,0 +1,20 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++     Copyright (C) 2016 The Pure Nexus Project
++
++     Licensed under the Apache License, Version 2.0 (the "License");
++     you may not use this file except in compliance with the License.
++     You may obtain a copy of the License at
++
++          http://www.apache.org/licenses/LICENSE-2.0
++
++     Unless required by applicable law or agreed to in writing, software
++     distributed under the License is distributed on an "AS IS" BASIS,
++     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++     See the License for the specific language governing permissions and
++     limitations under the License.
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <!-- Is Advanced Reboot enabled? -->
++    <bool name="config_advanced_reboot">true</bool>
++</resources>
+diff --git a/core/res/res/values/custom_strings.xml b/core/res/res/values/custom_strings.xml
+new file mode 100644
+index 0000000..e6d8206
+--- /dev/null
++++ b/core/res/res/values/custom_strings.xml
+@@ -0,0 +1,28 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++     Copyright (C) 2016 The Pure Nexus Project
++
++     Licensed under the Apache License, Version 2.0 (the "License");
++     you may not use this file except in compliance with the License.
++     You may obtain a copy of the License at
++
++          http://www.apache.org/licenses/LICENSE-2.0
++
++     Unless required by applicable law or agreed to in writing, software
++     distributed under the License is distributed on an "AS IS" BASIS,
++     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++     See the License for the specific language governing permissions and
++     limitations under the License.
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <!-- Button to reboot the phone in reboot menu -->
++    <string name="reboot_reboot">Reboot</string>
++    <!-- Button to reboot the phone into recovery in reboot menu-->
++    <string name="reboot_recovery">Recovery</string>
++    <!-- Button to reboot the phone into bootloader in reboot menu -->
++    <string name="reboot_bootloader">Bootloader</string>
++    <!-- Button to soft reboot the device in reboot menu -->
++    <string name="reboot_soft">Soft reboot</string>
++    <!-- Reboot Progress Dialog. This is shown if the user chooses to reboot the phone. -->
++    <string name="reboot_progress">Rebooting\u2026</string>
++</resources>
+diff --git a/core/res/res/values/custom_symbols.xml b/core/res/res/values/custom_symbols.xml
+new file mode 100644
+index 0000000..b48eb0b
+--- /dev/null
++++ b/core/res/res/values/custom_symbols.xml
+@@ -0,0 +1,26 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++     Copyright (C) 2016 The Pure Nexus Project
++
++     Licensed under the Apache License, Version 2.0 (the "License");
++     you may not use this file except in compliance with the License.
++     You may obtain a copy of the License at
++
++          http://www.apache.org/licenses/LICENSE-2.0
++
++     Unless required by applicable law or agreed to in writing, software
++     distributed under the License is distributed on an "AS IS" BASIS,
++     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++     See the License for the specific language governing permissions and
++     limitations under the License.
++-->
++<resources>
++  <!-- Reboot - Advanced Reboot -->
++  <java-symbol type="array" name="shutdown_reboot_options" />
++  <java-symbol type="array" name="shutdown_reboot_actions" />
++  <java-symbol type="bool" name="config_advanced_reboot" />
++  <java-symbol type="drawable" name="ic_lock_power_reboot" />
++  <java-symbol type="string" name="reboot_confirm" />
++  <java-symbol type="string" name="reboot_progress" />
++  <java-symbol type="string" name="global_action_reboot" />
++</resources>
+diff --git a/services/core/java/com/android/server/policy/GlobalActions.java b/services/core/java/com/android/server/policy/GlobalActions.java
+index 9ef2e13..38d606f 100644
+--- a/services/core/java/com/android/server/policy/GlobalActions.java
++++ b/services/core/java/com/android/server/policy/GlobalActions.java
+@@ -105,7 +105,6 @@
+     private static final String GLOBAL_ACTION_KEY_LOCKDOWN = "lockdown";
+     private static final String GLOBAL_ACTION_KEY_VOICEASSIST = "voiceassist";
+     private static final String GLOBAL_ACTION_KEY_ASSIST = "assist";
+-    private static final String GLOBAL_ACTION_KEY_RESTART = "restart";
+ 
+     private final Context mContext;
+     private final WindowManagerFuncs mWindowManagerFuncs;
+@@ -306,8 +305,6 @@ public boolean showBeforeProvisioning() {
+                 mItems.add(getVoiceAssistAction());
+             } else if (GLOBAL_ACTION_KEY_ASSIST.equals(actionKey)) {
+                 mItems.add(getAssistAction());
+-            } else if (GLOBAL_ACTION_KEY_RESTART.equals(actionKey)) {
+-                mItems.add(new RestartAction());
+             } else {
+                 Log.e(TAG, "Invalid global action key " + actionKey);
+             }
+@@ -382,7 +379,7 @@ public void onPress() {
+             mWindowManagerFuncs.shutdown(false /* confirm */);
+         }
+     }
+-    
++
+     private final class RebootAction extends SinglePressAction {
+         private RebootAction() {
+             super(com.android.internal.R.drawable.ic_lock_power_reboot,
+@@ -412,38 +409,6 @@ public void onPress() {
+         }
+     }
+ 
+-    private final class RestartAction extends SinglePressAction implements LongPressAction {
+-        private RestartAction() {
+-            super(R.drawable.ic_restart, R.string.global_action_restart);
+-        }
+-
+-        @Override
+-        public boolean onLongPress() {
+-            UserManager um = (UserManager) mContext.getSystemService(Context.USER_SERVICE);
+-            if (!um.hasUserRestriction(UserManager.DISALLOW_SAFE_BOOT)) {
+-                mWindowManagerFuncs.rebootSafeMode(true);
+-                return true;
+-            }
+-            return false;
+-        }
+-
+-        @Override
+-        public boolean showDuringKeyguard() {
+-            return true;
+-        }
+-
+-        @Override
+-        public boolean showBeforeProvisioning() {
+-            return true;
+-        }
+-
+-        @Override
+-        public void onPress() {
+-            mWindowManagerFuncs.reboot(true /* confirm */);
+-        }
+-    }
+-
+-
+     private class BugReportAction extends SinglePressAction implements LongPressAction {
+ 
+         public BugReportAction() {
+diff --git a/services/core/java/com/android/server/power/ShutdownThread.java b/services/core/java/com/android/server/power/ShutdownThread.java
+index 3a5321a..5e973b3 100644
+--- a/services/core/java/com/android/server/power/ShutdownThread.java
++++ b/services/core/java/com/android/server/power/ShutdownThread.java
+@@ -22,6 +22,7 @@
+ import android.app.AlertDialog;
+ import android.app.Dialog;
+ import android.app.IActivityManager;
++import android.app.KeyguardManager;
+ import android.app.ProgressDialog;
+ import android.bluetooth.BluetoothAdapter;
+ import android.bluetooth.IBluetoothManager;
+@@ -49,6 +50,7 @@
+ import android.os.storage.IMountShutdownObserver;
+ import android.system.ErrnoException;
+ import android.system.Os;
++import android.widget.ListView;
+ 
+ import com.android.internal.telephony.ITelephony;
+ import com.android.server.pm.PackageManagerService;
+@@ -78,6 +80,7 @@
+     private static final int PACKAGE_MANAGER_STOP_PERCENT = 6;
+     private static final int RADIO_STOP_PERCENT = 18;
+     private static final int MOUNT_SERVICE_STOP_PERCENT = 20;
++    private static final String SOFT_REBOOT = "soft_reboot";
+ 
+     // length of vibration before shutting down
+     private static final int SHUTDOWN_VIBRATE_MS = 500;
+@@ -139,6 +142,14 @@ public static void shutdown(final Context context, String reason, boolean confir
+         shutdownInner(context, confirm);
+     }
+ 
++    private static boolean isAdvancedRebootPossible(final Context context) {
++        boolean advancedRebootEnabled = context.getResources().getBoolean(
++            com.android.internal.R.bool.config_advanced_reboot);
++        boolean isPrimaryUser = UserHandle.getCallingUserId() == UserHandle.USER_SYSTEM;
++
++        return advancedRebootEnabled && !mRebootSafeMode && isPrimaryUser;
++    }
++
+     static void shutdownInner(final Context context, boolean confirm) {
+         // ensure that only one thread is trying to power down.
+         // any additional calls are just returned
+@@ -173,23 +184,56 @@ static void shutdownInner(final Context context, boolean confirm) {
+ 
+         if (confirm) {
+             final CloseDialogReceiver closer = new CloseDialogReceiver(context);
++            final boolean advancedReboot = isAdvancedRebootPossible(context);
++
+             if (sConfirmDialog != null) {
+                 sConfirmDialog.dismiss();
++                sConfirmDialog = null;
+             }
+-            sConfirmDialog = new AlertDialog.Builder(context)
++            AlertDialog.Builder confirmDialogBuilder = new AlertDialog.Builder(context)
+                     .setTitle(mRebootSafeMode
+                             ? com.android.internal.R.string.reboot_safemode_title
+                             : showRebootOption
+-                                    ? com.android.internal.R.string.reboot_title
+-                                    : com.android.internal.R.string.power_off)
+-                    .setMessage(resourceId)
+-                    .setPositiveButton(com.android.internal.R.string.yes, new DialogInterface.OnClickListener() {
++                                    ? com.android.internal.R.string.global_action_reboot
++                                    : com.android.internal.R.string.power_off);
++
++            if (!advancedReboot) {
++                confirmDialogBuilder.setMessage(resourceId);
++            } else {
++                confirmDialogBuilder
++                      .setSingleChoiceItems(com.android.internal.R.array.shutdown_reboot_options,
++                              0, null);
++            }
++
++            confirmDialogBuilder.setPositiveButton(com.android.internal.R.string.yes,
++                    new DialogInterface.OnClickListener() {
++                        @Override
+                         public void onClick(DialogInterface dialog, int which) {
++                            if (advancedReboot) {
++                                boolean softReboot = false;
++                                ListView reasonsList = ((AlertDialog)dialog).getListView();
++                                int selected = reasonsList.getCheckedItemPosition();
++                                if (selected != ListView.INVALID_POSITION) {
++                                    String actions[] = context.getResources().getStringArray(
++                                            com.android.internal.R.array.shutdown_reboot_actions);
++                                    if (selected >= 0 && selected < actions.length) {
++                                        mReason = actions[selected];
++                                        if (actions[selected].equals(SOFT_REBOOT)) {
++                                            doSoftReboot();
++                                            return;
++                                        }
++                                    }
++                                }
++
++                                mReboot = true;
++                            }
+                             beginShutdownSequence(context);
+-                        }
+-                    })
+-                    .setNegativeButton(com.android.internal.R.string.no, null)
+-                    .create();
++                      }
++                  });
++
++            confirmDialogBuilder.setNegativeButton(com.android.internal.R.string.no, null);
++            sConfirmDialog = confirmDialogBuilder.create();
++
+             closer.dialog = sConfirmDialog;
+             sConfirmDialog.setOnDismissListener(closer);
+             sConfirmDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG);
+@@ -199,6 +243,18 @@ public void onClick(DialogInterface dialog, int which) {
+         }
+     }
+ 
++    private static void doSoftReboot() {
++        try {
++            final IActivityManager am =
++                  ActivityManagerNative.asInterface(ServiceManager.checkService("activity"));
++            if (am != null) {
++                am.restart();
++            }
++        } catch (RemoteException e) {
++            Log.e(TAG, "failure trying to perform soft reboot", e);
++        }
++    }
++
+     private static class CloseDialogReceiver extends BroadcastReceiver
+             implements DialogInterface.OnDismissListener {
+         private Context mContext;
+@@ -311,9 +367,12 @@ private static void beginShutdownSequence(Context context) {
+             }
+         } else if (PowerManager.REBOOT_RECOVERY.equals(mReason)) {
+             // Factory reset path. Set the dialog message accordingly.
+-            pd.setTitle(context.getText(com.android.internal.R.string.reboot_to_reset_title));
++            pd.setTitle(context.getText(com.android.internal.R.string.global_action_reboot));
+             pd.setMessage(context.getText(
+-                        com.android.internal.R.string.reboot_to_reset_message));
++                        com.android.internal.R.string.reboot_progress));
++        } else if (mReboot) {
++            pd.setTitle(context.getText(com.android.internal.R.string.global_action_reboot));
++            pd.setMessage(context.getText(com.android.internal.R.string.reboot_progress));
+             pd.setIndeterminate(true);
+         } else {
+             pd.setTitle(context.getText(com.android.internal.R.string.power_off));

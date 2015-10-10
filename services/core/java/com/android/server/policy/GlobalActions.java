@@ -105,7 +105,6 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
     private static final String GLOBAL_ACTION_KEY_LOCKDOWN = "lockdown";
     private static final String GLOBAL_ACTION_KEY_VOICEASSIST = "voiceassist";
     private static final String GLOBAL_ACTION_KEY_ASSIST = "assist";
-    private static final String GLOBAL_ACTION_KEY_RESTART = "restart";
 
     private final Context mContext;
     private final WindowManagerFuncs mWindowManagerFuncs;
@@ -306,8 +305,6 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
                 mItems.add(getVoiceAssistAction());
             } else if (GLOBAL_ACTION_KEY_ASSIST.equals(actionKey)) {
                 mItems.add(getAssistAction());
-            } else if (GLOBAL_ACTION_KEY_RESTART.equals(actionKey)) {
-                mItems.add(new RestartAction());
             } else {
                 Log.e(TAG, "Invalid global action key " + actionKey);
             }
@@ -383,7 +380,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
             mWindowManagerFuncs.shutdown(false /* confirm */);
         }
     }
-    
+
     private final class RebootAction extends SinglePressAction {
         private RebootAction() {
             super(com.android.internal.R.drawable.ic_lock_power_reboot,
@@ -443,7 +440,6 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
             mWindowManagerFuncs.reboot(false /* confirm */);
         }
     }
-
 
     private class BugReportAction extends SinglePressAction implements LongPressAction {
 
