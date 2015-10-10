@@ -108,4 +108,7 @@
 
     <!-- Whether device has physical tri state switch -->
     <bool name="config_hasAlertSlider">false</bool>
+
+    <!-- Is Advanced Reboot enabled? -->
+    <bool name="config_advanced_reboot">true</bool>
 </resources>

@@ -78,4 +78,12 @@
   <java-symbol type="string" name="alert_slider_uevent_match_path" />
   <java-symbol type="bool" name="config_hasAlertSlider" />
 
+  <!-- Reboot - Advanced Reboot -->
+  <java-symbol type="array" name="shutdown_reboot_options" />
+  <java-symbol type="array" name="shutdown_reboot_actions" />
+  <java-symbol type="bool" name="config_advanced_reboot" />
+  <java-symbol type="string" name="reboot_confirm" />
+  <java-symbol type="string" name="reboot_progress" />
+  <java-symbol type="string" name="reboot_title" />
+
 </resources>
