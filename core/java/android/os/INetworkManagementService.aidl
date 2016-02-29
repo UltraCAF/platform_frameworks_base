@@ -455,6 +455,7 @@ interface INetworkManagementService
     int removeRoutesFromLocalNetwork(in List<RouteInfo> routes);
 
     void setAllowOnlyVpnForUids(boolean enable, in UidRange[] uidRanges);
+
     /**
      * Create SoftAp Interface
      */
@@ -464,4 +465,11 @@ interface INetworkManagementService
      * Delete SoftAp Interface
      */
     void deleteSoftApInterface(String wlanIface);
+
+    /**
+     * Restrict UID from accessing data/wifi
+     */
+    void restrictAppOnData(int uid, boolean restrict);
+    void restrictAppOnWifi(int uid, boolean restrict);
+
 }
