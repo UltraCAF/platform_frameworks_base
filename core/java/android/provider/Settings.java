@@ -3758,6 +3758,15 @@ public final class Settings {
          *      0 = off
          *    255 = default
          *    255 = max
+
+        /**
+         * Whether to disable showing arrows in network traffic indicators
+         * @hide
+         */
+        public static final String NETWORK_TRAFFIC_HIDEARROW = "network_traffic_hidearrow";
+
+        /**
+         * Disable dashboard conditions in Settings
          * @hide
          */
         public static final String BUTTON_BRIGHTNESS = "button_brightness";
