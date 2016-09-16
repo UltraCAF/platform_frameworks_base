@@ -3598,6 +3598,8 @@ public final class Settings {
             }
         };
 
+        /** region Extensions System Settings */
+
         /**
          * IMPORTANT: If you add a new public settings you also have to add it to
          * PUBLIC_SETTINGS below. If the new setting is hidden you have to add
@@ -3634,6 +3636,10 @@ public final class Settings {
          * Whether user can enable/disable button brightness.
          * <p>
          * Type: int (0 for false, 1 for true)
+         * Swap volume buttons when the screen is rotated
+         * 0 - Disabled
+         * 1 - Enabled (screen is rotated by 90 or 180 degrees: phone, hybrid)
+         * 2 - Enabled (screen is rotated by 180 or 270 degrees: tablet)
          * @hide
          */
         public static final String BUTTON_BRIGHTNESS_ENABLED = "button_brightness_enabled";
@@ -6497,6 +6503,14 @@ public final class Settings {
         public static final String MANAGED_PROFILE_CONTACT_REMOTE_SEARCH =
                 "managed_profile_contact_remote_search";
 
+        /** region Extensions Secure Settings */
+
+        /**
+         * Whether newly installed apps should run with privacy guard by default
+         * @hide
+         */
+        public static final String PRIVACY_GUARD_DEFAULT = "privacy_guard_default";
+
         /**
          * Whether or not the automatic storage manager is enabled and should run on the device.
          *
@@ -6504,6 +6518,8 @@ public final class Settings {
          */
         public static final String AUTOMATIC_STORAGE_MANAGER_ENABLED =
                 "automatic_storage_manager_enabled";
+
+        /** endregion */
 
         /**
          * How many days of information for the automatic storage manager to retain on the device.
