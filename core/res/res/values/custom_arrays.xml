@@ -23,4 +23,7 @@
         <item>com.google.android.gsf|com.google.android.talk</item>
     </string-array>
 
+    <!-- Alert slider proc nodes paths. -->
+    <string name="alert_slider_state_path"></string>
+    <string name="alert_slider_uevent_match_path"></string>
 </resources>
