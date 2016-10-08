@@ -3602,6 +3602,13 @@ public final class Settings {
          */
 
         /**
+         * Show the four 4g network icon instead of lte
+         * @hide
+         */
+        public static final String SHOW_LTE_FOURGEE = "show_lte_fourgee";
+
+
+        /**
          * Whether user can enable/disable navigation bar.
          * <p>
          * Type: int (0 for false, 1 for true)

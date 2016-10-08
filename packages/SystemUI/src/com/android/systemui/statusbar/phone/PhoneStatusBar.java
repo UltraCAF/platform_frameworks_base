@@ -376,6 +376,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     // settings
     private QSPanel mQSPanel;
 
+    // show lte/4g switch
+    private boolean mShowLteFourGee;
+
     // top bar
     BaseStatusBarHeader mHeader;
     protected KeyguardStatusBarView mKeyguardStatusBar;
@@ -440,6 +443,55 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private HandlerThread mHandlerThread;
 
     private boolean mNavigationBarViewAttached;
+
+    class SettingsObserver extends ContentObserver {
+        SettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.SHOW_LTE_FOURGEE),
+                    false, this, UserHandle.USER_ALL);
+            update();
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            update();
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            super.onChange(selfChange, uri);
+            if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_SHOW_TICKER))) {
+                mTickerEnabled = Settings.System.getIntForUser(
+                        mContext.getContentResolver(),
+                        Settings.System.STATUS_BAR_SHOW_TICKER,
+                        mContext.getResources().getBoolean(R.bool.enable_ticker)
+                        ? 1 : 1, UserHandle.USER_CURRENT) == 1;
+                initTickerView();
+            } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.QS_ROWS_LANDSCAPE))
+                || uri.equals(Settings.System.getUriFor(
+                    Settings.System.QS_COLUMNS_LANDSCAPE))) {
+                updateQSRowsColumnsLandscape();
+           }
+            update();
+        }
+
+        public void update() {
+            ContentResolver resolver = mContext.getContentResolver();
+            if (mHeader != null) {
+                mHeader.updateSettings();
+            }
+
+            boolean mShowLteFourGee = Settings.System.getIntForUser(resolver,
+                    Settings.System.SHOW_LTE_FOURGEE, 0, UserHandle.USER_CURRENT) == 1;
+        }
+    }
 
     // ensure quick settings is disabled until the current user makes it through the setup wizard
     private boolean mUserSetup = false;
