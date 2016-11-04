@@ -5008,7 +5008,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
     private int navigationBarPosition(int displayWidth, int displayHeight, int displayRotation) {
         if (mNavigationBarCanMove && displayWidth > displayHeight) {
-            if (displayRotation == Surface.ROTATION_270) {
+            if (mNavigationBarLeftInLandscape) {
                 return NAV_BAR_LEFT;
             } else {
                 return NAV_BAR_RIGHT;
