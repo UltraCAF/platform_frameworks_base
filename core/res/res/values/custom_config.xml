@@ -74,4 +74,7 @@
          config to 19. -->
     <integer name="config_deviceHardwareKeys">19</integer>
 
+  <!-- sRGB sysfs path -->
+  <string name="config_srgb_path"></string>
+
 </resources>

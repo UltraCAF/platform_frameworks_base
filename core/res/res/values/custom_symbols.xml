@@ -35,4 +35,8 @@
   <java-symbol type="integer" name="config_longPressOnAssistKeyBehavior" />
   <java-symbol type="integer" name="config_longPressOnAppSwitchKeyBehavior" />
   <java-symbol type="integer" name="config_longPressOnCameraKeyBehavior" />
+
+  <!-- sRGB mode -->
+  <java-symbol type="string" name="config_srgb_path" />
+
 </resources>
