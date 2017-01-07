@@ -86,4 +86,8 @@
 
   <!-- Internal default to navigation bar value -->
   <java-symbol type="bool" name="config_defaultToNavigationBar" />
+
+  <!-- sRGB mode -->
+  <java-symbol type="string" name="config_srgb_path" />
+
 </resources>

@@ -121,4 +121,7 @@
     <!-- Internal default to navigation bar value -->
     <bool name="config_defaultToNavigationBar">true</bool>
 
+  <!-- sRGB sysfs path -->
+  <string name="config_srgb_path"></string>
+
 </resources>
