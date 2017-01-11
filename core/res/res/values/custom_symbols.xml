@@ -68,4 +68,6 @@
   <!-- FP unlock Boost -->
   <java-symbol type="integer" name="fpunlockboost_duration" />
 
+  <!-- Internal default to navigation bar value -->
+  <java-symbol type="bool" name="config_defaultToNavigationBar" />
 </resources>
