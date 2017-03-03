@@ -95,4 +95,11 @@
     <!-- Whether doze feature is enabled by default in settings. -->
     <bool name="config_doze_enabled_by_default">false</bool>
 
+    <!-- Whether Keypress Boost is enabled -->
+    <bool name="config_enableKeypressBoost">false</bool>
+
+    <!-- Boost parameters which get passed to QPerformance -->
+    <integer-array name="keypressboost_strong_param_value"/>
+    <integer-array name="keypressboost_weak_param_value"/>
+
 </resources>

@@ -57,4 +57,9 @@
   <!-- Doze mode -->
   <java-symbol type="bool" name="config_doze_enabled_by_default" />
 
+  <!-- Keypress Boost -->
+  <java-symbol type="bool" name="config_enableKeypressBoost" />
+  <java-symbol type="array" name="keypressboost_strong_param_value" />
+  <java-symbol type="array" name="keypressboost_weak_param_value" />
+
 </resources>
