@@ -265,6 +265,9 @@ public class SubscriptionManager {
      */
     public static final String CB_EXTREME_THREAT_ALERT = "enable_cmas_extreme_threat_alerts";
 
+    /** @hide */
+    public static final int DEFAULT_NW_MODE = -1;
+
     /**
      * TelephonyProvider column name for severe threat in CB settings
      *@hide
