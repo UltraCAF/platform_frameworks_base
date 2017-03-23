@@ -3738,6 +3738,12 @@ public final class Settings {
          */
         public static final String KEY_CAMERA_DOUBLE_TAP_ACTION = "key_camera_double_tap_action";
 
+        /**
+         * Quick Settings number of columns
+         * @hide
+         */
+        public static final String QS_LAYOUT_COLUMNS = "qs_layout_columns";
+
         /** @hide */
         public static final Validator KEY_VALIDATOR = new Validator() {
             @Override
