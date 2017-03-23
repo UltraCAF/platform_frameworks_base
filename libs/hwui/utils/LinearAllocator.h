@@ -114,7 +114,10 @@ public:
      * The number of bytes used for buffers allocated in the LinearAllocator (does not count space
      * wasted)
      */
-    size_t usedSize() const { return mTotalAllocated - mWastedSpace; }
+    size_t usedSize() const { return mTotalAllocated - mWastedSpace;
+
+    Page* mPages;
+}
 
 private:
     LinearAllocator(const LinearAllocator& other);
