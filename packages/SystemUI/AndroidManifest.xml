@@ -222,7 +222,6 @@
                   android:icon="@drawable/tuner"
                   android:theme="@style/TunerSettings"
                   android:label="@string/systemui_tuner_statusbar_title"
-                  android:parentActivityName="com.dirtyunicorns.dutweaks.DirtyTweaks"
                   android:process=":tuner"
                   android:exported="true">
         </activity>
@@ -239,14 +238,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity-alias>
-
-        <activity android:name=".tuner.NavbarActivity"
-                  android:theme="@android:style/Theme.Material.Settings"
-                  android:label="@string/navbar_tuner_title"
-                  android:process=":tuner"
-                  android:parentActivityName="com.aosip.owlsnest.navigation.NavigationButtonsCategory"
-                  android:exported="true">
-        </activity>
 
         <!-- Service used by secondary users to register themselves with the system user. -->
         <service android:name=".recents.RecentsSystemUserService"
