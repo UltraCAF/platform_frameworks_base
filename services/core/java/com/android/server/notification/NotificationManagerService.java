@@ -944,14 +944,6 @@ public class NotificationManagerService extends SystemService {
                         Settings.System.NOTIFICATION_LIGHT_BRIGHTNESS_LEVEL,
                         LIGHT_BRIGHTNESS_MAXIMUM, UserHandle.USER_CURRENT);
             }
-<<<<<<< HEAD
-=======
-
-            // Notification lights with screen on
-            mScreenOnEnabled = (Settings.System.getIntForUser(resolver,
-                    Settings.System.NOTIFICATION_LIGHT_SCREEN_ON,
-                    mScreenOnDefault ? 1 : 0, UserHandle.USER_CURRENT) != 0);
->>>>>>> dbd1479... LEDs Brightness [2/2]: Lights notifications brightness support
 
             updateNotificationPulse();
         }
