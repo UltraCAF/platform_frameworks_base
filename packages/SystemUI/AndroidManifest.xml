@@ -222,27 +222,34 @@
                   android:icon="@drawable/tuner"
                   android:theme="@style/TunerSettings"
                   android:label="@string/systemui_tuner_statusbar_title"
-                  android:parentActivityName=""
                   android:process=":tuner"
                   android:exported="true">
+            <intent-filter>
+                <action android:name="com.android.settings.action.EXTRA_SETTINGS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.android.settings.action.POWER_NOTIF_CONTROLS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <meta-data android:name="com.android.settings.category"
+                    android:value="com.android.settings.category.device" />
         </activity>
 
-        <activity android:name=".tuner.PNCActivity"
+<!--        <activity android:name=".tuner.PNCActivity"
                   android:enabled="true"
                   android:icon="@drawable/tuner"
                   android:theme="@style/TunerSettings"
                   android:label="@string/systemui_tuner_pnc_title"
-                  android:parentActivityName=""
                   android:process=":tuner"
                   android:exported="true">
         </activity>
-
+-->
         <activity-alias android:name=".DemoMode"
                   android:targetActivity=".tuner.TunerActivity"
                   android:icon="@drawable/tuner"
                   android:theme="@style/TunerSettings"
                   android:label="@string/demo_mode"
-                  android:parentActivityName=""
                   android:process=":tuner"
                   android:exported="true">
             <intent-filter>
