@@ -36,10 +36,6 @@ public class PowerNotificationControlsFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (getActivity().getActionBar() != null) {
-            getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
-        }
     }
 
     @Override
@@ -58,21 +54,6 @@ public class PowerNotificationControlsFragment extends Fragment {
         switchText.setText(isEnabled()
                 ? getString(R.string.switch_bar_on)
                 : getString(R.string.switch_bar_off));
-
-        switchBar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boolean newState = !isEnabled();
-                MetricsLogger.action(getContext(),
-                        MetricsEvent.ACTION_TUNER_POWER_NOTIFICATION_CONTROLS, newState);
-                Settings.Secure.putInt(getContext().getContentResolver(),
-                        KEY_SHOW_PNC, newState ? 1 : 0);
-                switchWidget.setChecked(newState);
-                switchText.setText(newState
-                        ? getString(R.string.switch_bar_on)
-                        : getString(R.string.switch_bar_off));
-            }
-        });
 
         switchWidget.setOnClickListener(new View.OnClickListener() {
             @Override
