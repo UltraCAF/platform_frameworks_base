@@ -339,24 +339,6 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
                             : MetricsProto.MetricsEvent.ACTION_QS_COLLAPSED_SETTINGS_LAUNCH);
 
             startSettingsActivity();
-            if (mSettingsButton.isTunerClick()) {
-                mHost.startRunnableDismissingKeyguard(() -> post(() -> {
-                    if (TunerService.isTunerEnabled(mContext)) {
-                        TunerService.showResetRequest(mContext, () -> {
-                            // Relaunch settings so that the tuner disappears.
-                            startSettingsActivity();
-                        });
-                    } else {
-                        Toast.makeText(getContext(), R.string.tuner_toast,
-                                Toast.LENGTH_LONG).show();
-                        TunerService.setTunerEnabled(mContext, true);
-                    }
-                    startSettingsActivity();
-
-                }));
-            } else {
-                startSettingsActivity();
-            }
         } else if (v == mAlarmStatus || v == mAlarmStatusCollapsed) {
             startClockActivity(mNextAlarm);
          } else if (v == mClock) {
