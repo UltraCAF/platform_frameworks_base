@@ -33,16 +33,26 @@ public class PNCActivity extends SettingsDrawerActivity implements
 
     private static final String TAG_TUNER = "PNC Activity";
 
+    private String mInitialTitle;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         if (getFragmentManager().findFragmentByTag(TAG_TUNER) == null) {
             final String action = getIntent().getAction();
             final Fragment fragment;
+
             fragment = new PowerNotificationControlsFragment();
 
             getFragmentManager().beginTransaction().replace(R.id.content_frame,
                     fragment, TAG_TUNER).commit();
+            String extra = getIntent().getStringExtra(TAG_TUNER);
+
+            mInitialTitle = String.valueOf(getActionBar().getTitle());
+
+            if (extra != null) {
+                startPreferenceScreen((PreferenceFragment)fragment, extra, false);
+            }
         }
     }
 
@@ -65,9 +75,25 @@ public class PNCActivity extends SettingsDrawerActivity implements
             transaction.commit();
             return true;
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-            Log.d("TunerActivity", "Problem launching fragment", e);
+            Log.d("PNCActivity", "Problem launching fragment", e);
             return false;
         }
+    }
+
+    private boolean startPreferenceScreen(PreferenceFragment caller, String key, boolean backStack) {
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        SubSettingsFragment fragment = new SubSettingsFragment();
+        final Bundle b = new Bundle(1);
+        b.putString(PreferenceFragment.ARG_PREFERENCE_ROOT, key);
+        fragment.setArguments(b);
+        fragment.setTargetFragment(caller, 0);
+        transaction.replace(R.id.content_frame, fragment);
+        if (backStack) {
+            transaction.addToBackStack("PreferenceFragment");
+        }
+        transaction.commit();
+
+        return true;
     }
 
     @Override

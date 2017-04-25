@@ -33,9 +33,4 @@
 
     </ScrollView>
 
-    <ScrollView
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:text="@string/cm_power_notification_controls_description"/>
-
 </LinearLayout>

@@ -35,7 +35,7 @@
 
     <!-- SystemUI Tuner Parts -->
     <string name="systemui_tuner_pnc_title">Power notification controls</string>
-    <string name="systemui_tuner_statusbar_title">Statusbar items</string>
+    <string name="systemui_tuner_statusbar_title">SystemUI Tuner</string>
 
     <!-- Navbar tuner -->
     <string name="navbar_tuner_title">Navbar tuner</string>
@@ -104,5 +104,4 @@
 
     <string name="accessibility_dpad_left">Cursor left</string>
     <string name="accessibility_dpad_right">Cursor right</string>
-
 </resources>
