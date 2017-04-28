@@ -116,7 +116,6 @@ public:
      */
     size_t usedSize() const { return mTotalAllocated - mWastedSpace;
 
-    Page* mPages;
 }
 
 private:
