@@ -733,6 +733,7 @@ public final class PowerManagerService extends SystemService
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.NAVIGATION_BAR_ENABLED),
                     false, mSettingsObserver, UserHandle.USER_ALL);
+
             IVrManager vrManager =
                     (IVrManager) getBinderService(VrManagerService.VR_MANAGER_BINDER_SERVICE);
             if (vrManager != null) {
