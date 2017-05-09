@@ -2338,11 +2338,6 @@ public class PackageManagerService extends IPackageManager.Stub {
                 scanDirTracedLI(new File(VENDOR_OVERLAY_DIR, overlayThemeDir), mDefParseFlags
                         | PackageParser.PARSE_IS_SYSTEM
                         | PackageParser.PARSE_IS_SYSTEM_DIR,
-                        scanFlags, 0);
-            }
-            scanDirTracedLI(new File(VENDOR_OVERLAY_DIR), mDefParseFlags
-                    | PackageParser.PARSE_IS_SYSTEM
-                    | PackageParser.PARSE_IS_SYSTEM_DIR,
                     scanFlags, 0);
 
             // Find base frameworks (resource packages without code).
