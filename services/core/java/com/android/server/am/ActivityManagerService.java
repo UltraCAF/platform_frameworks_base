@@ -2423,16 +2423,6 @@ public final class ActivityManagerService extends ActivityManagerNative
             case NETWORK_OPTS_CHECK_MSG: {
                 int flag = msg.arg1;
                 String packageName = (String)msg.obj;
-                if (flag == 0) {
-                    if (mActivityTrigger != null) {
-                        synchronized (mNetLock) {
-                            if (mActiveNetType >= 0) {
-                                mActivityTrigger.activityMiscTrigger(NETWORK_OPTS, packageName, mActiveNetType, 0);
-                                return;
-                            }
-                        }
-                    }
-                }
                 if (mActivityTrigger != null) {
                     mActivityTrigger.activityMiscTrigger(NETWORK_OPTS, packageName, ConnectivityManager.TYPE_NONE, 1);
                 }
