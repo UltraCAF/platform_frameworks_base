@@ -44,6 +44,7 @@
     <string name="show_lte_fourgee_summary">Replaces LTE statusbar indicator with 4G</string>
     <string name="statusbar_tuner_category_title">Hide items from statusbar</string>
 
+<<<<<<< HEAD
     <!-- Content description of the Superuser tile -->
     <string name="accessibility_su_active">Superuser session active</string>
 
@@ -98,4 +99,6 @@
         <item></item> <!-- STREAM_DTMF -->
         <item></item> <!-- STREAM_TTS -->
     </string-array>
+=======
+>>>>>>> parent of b88cab38524... appops: Privacy Guard for N
 </resources>
