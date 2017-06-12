@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.internal.util.aosip;
+package com.android.internal.util.caf;
 
 import android.content.Context;
 import android.hardware.camera2.CameraAccessException;
@@ -22,7 +22,7 @@ import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraManager;
 import android.net.ConnectivityManager;
 
-public class aosipUtils {
+public class cafUtils {
 
     public static boolean deviceSupportsFlashLight(Context context) {
         CameraManager cameraManager = (CameraManager) context.getSystemService(

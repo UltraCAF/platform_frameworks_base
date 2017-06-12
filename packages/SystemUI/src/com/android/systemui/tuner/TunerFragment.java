@@ -29,7 +29,7 @@ import android.support.v7.preference.Preference.OnPreferenceChangeListener;
 
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.MetricsProto.MetricsEvent;
-import com.android.internal.util.aosip.aosipUtils;
+import com.android.internal.util.caf.cafUtils;
 import com.android.systemui.R;
 
 public class TunerFragment extends PreferenceFragment {
@@ -49,7 +49,7 @@ public class TunerFragment extends PreferenceFragment {
         final ContentResolver resolver = getActivity().getContentResolver();
 
         mShowLteFourGee = (SwitchPreference) findPreference(SHOW_LTE_FOURGEE);
-        if (aosipUtils.isWifiOnly(getActivity())) {
+        if (cafUtils.isWifiOnly(getActivity())) {
             prefSet.removePreference(mShowLteFourGee);
         } else {
         mShowLteFourGee.setChecked((Settings.System.getInt(resolver,
