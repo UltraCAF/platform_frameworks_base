@@ -3737,13 +3737,6 @@ public final class Settings {
         public static final String SHOW_LTE_FOURGEE = "show_lte_fourgee";
 
         /**
-         * What color to use for the notification LED by default
-         * @hide
-         */
-        public static final String NOTIFICATION_LIGHT_PULSE_DEFAULT_COLOR =
-                "notification_light_pulse_default_color";
-
-        /**
          * Immersive recents options
          *
          * 0 = Default AOSP look
