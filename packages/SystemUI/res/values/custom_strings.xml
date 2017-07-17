@@ -139,4 +139,8 @@
     <string name="quick_settings_night_display_warning">Please note that Night Light may increase battery consumption.</string>
     <string name="quick_settings_night_display_hide">Do not show this warning</string>
 
+    <!-- OnTheSpot: Action denial button text. [CHAR LIMIT=NONE] -->
+    <string name="on_the_spot_deny">NO THANKS</string>
+    <!-- OnTheSpot: Action confirmation button text. [CHAR LIMIT=NONE] -->
+    <string name="on_the_spot_confirm">OKAY</string>
 </resources>
