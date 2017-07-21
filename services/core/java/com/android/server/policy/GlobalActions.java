@@ -289,8 +289,6 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
             }
             if (GLOBAL_ACTION_KEY_POWER.equals(actionKey)) {
                 continue;
-            } else if (GLOBAL_ACTION_KEY_REBOOT.equals(actionKey)) {
-                mItems.add(new RebootAction());
             } else if (GLOBAL_ACTION_KEY_SCREENSHOT.equals(actionKey)) {
                 mItems.add(getScreenshotAction());
             } else if (GLOBAL_ACTION_KEY_AIRPLANE.equals(actionKey)) {
@@ -592,7 +590,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
 
     private Action getAssistAction() {
         return new SinglePressAction(com.android.internal.R.drawable.ic_lock_assist,
-                R.string.global_action_search) {
+                R.string.global_action_assist) {
             @Override
             public void onPress() {
                 Intent intent = new Intent(Intent.ACTION_ASSIST);
@@ -614,7 +612,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
 
     private Action getVoiceAssistAction() {
         return new SinglePressAction(com.android.internal.R.drawable.ic_lock_voice,
-                R.string.global_action_voicesearch) {
+                R.string.global_action_voice_assist) {
             @Override
             public void onPress() {
                 Intent intent = new Intent(Intent.ACTION_VOICE_ASSIST);
