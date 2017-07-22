@@ -182,6 +182,7 @@ public class LightsService extends SystemService {
         private int mOnMS;
         private int mOffMS;
         private int mBrightness;
+        private int mBrightnessLevel;
         private boolean mFlashing;
         private int mBrightnessMode;
         private int mLastBrightnessMode;
