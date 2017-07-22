@@ -3895,8 +3895,6 @@ public final class Settings {
         public static final String ALERT_SLIDER_SILENT_MODE = "alert_slider_silent_mode";
 
         /**
-=======
->>>>>>> parent of a1314112881... input: introduce custom key event policy
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
