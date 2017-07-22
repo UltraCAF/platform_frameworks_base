@@ -113,9 +113,6 @@
     <!-- Defines the length of FP unlock boost -->
     <integer name="fpunlockboost_duration">700</integer>
 
-    <!-- Internal default to navigation bar value -->
-    <bool name="config_defaultToNavigationBar">true</bool>
-
     <!-- Is Advanced Reboot enabled? -->
     <bool name="config_advanced_reboot">true</bool>
 

@@ -68,9 +68,6 @@
   <!-- FP unlock Boost -->
   <java-symbol type="integer" name="fpunlockboost_duration" />
 
-  <!-- Internal default to navigation bar value -->
-  <java-symbol type="bool" name="config_defaultToNavigationBar" />
-
   <!-- Reboot - Advanced Reboot -->
   <java-symbol type="array" name="shutdown_reboot_options" />
   <java-symbol type="array" name="shutdown_reboot_actions" />
@@ -86,4 +83,5 @@
   <java-symbol type="drawable" name="ic_lock_user" />
   <java-symbol type="drawable" name="ic_lock_voice" />
   <java-symbol type="string" name="global_action_screenshot" />
+
 </resources>
