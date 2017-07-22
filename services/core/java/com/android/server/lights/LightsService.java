@@ -40,22 +40,12 @@ public class LightsService extends SystemService {
         }
 
         @Override
-        public int getBrightness() {
-            return mBrightness;
-        }
-
-        @Override
         public void setBrightness(int brightness) {
             setBrightness(brightness, BRIGHTNESS_MODE_USER);
         }
 
         @Override
         public void setBrightness(int brightness, int brightnessMode) {
-            if (brightness < 0) {
-                // Avoid setting invalid brightness.
-                brightness = 0;
-            }
-
             synchronized (this) {
                 // LOW_PERSISTENCE cannot be manually set
                 if (brightnessMode == BRIGHTNESS_MODE_LOW_PERSISTENCE) {
@@ -67,7 +57,6 @@ public class LightsService extends SystemService {
                 int color = brightness & 0x000000ff;
                 color = 0xff000000 | (color << 16) | (color << 8) | color;
                 setLightLocked(color, LIGHT_FLASH_NONE, 0, 0, brightnessMode);
-                mBrightness = brightness;
             }
         }
 
@@ -181,8 +170,6 @@ public class LightsService extends SystemService {
         private int mMode;
         private int mOnMS;
         private int mOffMS;
-        private int mBrightness;
-        private int mBrightnessLevel;
         private boolean mFlashing;
         private int mBrightnessMode;
         private int mLastBrightnessMode;
