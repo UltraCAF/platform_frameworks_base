@@ -165,6 +165,7 @@ public final class BatteryService extends SystemService {
     private int mBatteryLowARGB;
     private int mBatteryMediumARGB;
     private int mBatteryFullARGB;
+    private int mBatteryReallyFullARGB;
     private boolean mMultiColorLed;
 
     private boolean mSentLowBatteryBroadcast = false;
@@ -1136,6 +1137,9 @@ public final class BatteryService extends SystemService {
                 resolver.registerContentObserver(
                         Settings.System.getUriFor(Settings.System.BATTERY_LIGHT_FULL_COLOR),
                         false, this, UserHandle.USER_ALL);
+                resolver.registerContentObserver(
+                        Settings.System.getUriFor(Settings.System.BATTERY_LIGHT_REALLY_FULL_COLOR),
+                        false, this, UserHandle.USER_ALL);
             }
 
             update();
@@ -1167,6 +1171,8 @@ public final class BatteryService extends SystemService {
             mBatteryFullARGB = Settings.System.getInt(resolver,
                     Settings.System.BATTERY_LIGHT_FULL_COLOR, res.getInteger(
                     com.android.internal.R.integer.config_notificationsBatteryFullARGB));
+            mBatteryReallyFullARGB = Settings.System.getInt(resolver,
+                    Settings.System.BATTERY_LIGHT_REALLY_FULL_COLOR, mBatteryFullARGB);
 
             // Notification LED brightness
             if (mAdjustableNotificationLedBrightness) {
