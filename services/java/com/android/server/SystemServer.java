@@ -1073,8 +1073,7 @@ public final class SystemServer {
                 }
 
                 if ((mPackageManager.hasSystemFeature(PackageManager.FEATURE_APP_WIDGETS)
-                    || context.getResources().getBoolean(R.bool.config_enableAppWidgetService))
-                    && !mIsAlarmBoot) {
+                    || context.getResources().getBoolean(R.bool.config_enableAppWidgetService))) {
                     mSystemServiceManager.startService(APPWIDGET_SERVICE_CLASS);
                 }
 
